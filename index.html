@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Intercessors Congregation Ministry</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    header {
+      background: #311B92;
+      color: white;
+      padding: 2rem;
+    }
+    h1 {
+      margin-bottom: 0.2em;
+    }
+    svg {
+      height: 60px;
+    }
+    main {
+      padding: 2rem;
+    }
+    form {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 2rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    input, textarea {
+      width: 100%;
+      padding: 1em;
+      margin: 1em 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      padding: 1em 2em;
+      background: #311B92;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .success {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" viewBox="0 0 24 24"><path d="M12 2C10.34 2 9 3.34 9 5v3H6c-1.66 0-3 1.34-3 3s1.34 3 3 3h3v3c0 1.66 1.34 3 3 3s3-1.34 3-3v-3h3c1.66 0 3-1.34 3-3s-1.34-3-3-3h-3V5c0-1.66-1.34-3-3-3z"/></svg>
+    <h1>INTERCESSORS CONGREGATION MINISTRY INC.</h1>
+    <p>(a.k.a. Prayer Partners Ministry)</p>
+  </header>
+  <main>
+    <p><strong>Mission:</strong> to intercede and pray for people, families, churches, communities, organizations, territories, states and nations on the basis of the Word of God.</p>
+    <p><strong>Mandate:</strong> to rescue the perishing world through intercessory prayers and the Word.</p>
+
+    <form id="prayerForm">
+      <h2>Submit a Prayer Request</h2>
+      <input type="text" name="name" placeholder="Your name" required />
+      <textarea name="request" placeholder="Your prayer request" required></textarea>
+      <button type="submit">Submit</button>
+      <p class="success" id="successMsg" style="display:none;">Prayer request submitted. God bless you!</p>
+    </form>
+  </main>
+  <script>
+    const form = document.getElementById('prayerForm');
+    const successMsg = document.getElementById('successMsg');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = {
+        name: form.name.value,
+        request: form.request.value
+      };
+
+      await fetch('http://localhost:5000/prayers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      successMsg.style.display = 'block';
+      form.reset();
+    });
+  </script>
+</body>
+</html>
